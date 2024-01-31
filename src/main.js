@@ -1,5 +1,4 @@
 const core = require('@actions/core')
-const { wait } = require('./wait')
 
 /**
  * The main function for the action.
@@ -7,18 +6,32 @@ const { wait } = require('./wait')
  */
 async function run() {
   try {
-    const ms = core.getInput('milliseconds', { required: true })
+    const template_owner = core.getInput('template_owner')
+    const template_repo = core.getInput('template_repo')
+    const template_project_number = parseInt(
+      core.getInput('template_project_number')
+    )
+    const owner = core.getInput('owner')
+    const repo = core.getInput('repo')
+    const project = core.getInput('project')
+    const token = core.getInput('token')
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
-
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const projectClonerModule = await import('@helaili/project-cloner')
+    const projectCloner = new projectClonerModule.ProjectCloner(
+      token,
+      template_owner,
+      template_repo,
+      template_project_number,
+      owner,
+      repo,
+      project
+    )
+    const projectMetadata = await projectCloner.clone()
 
     // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    core.setOutput('id', projectMetadata.id)
+    core.setOutput('url', projectMetadata.url)
+    core.setOutput('number', projectMetadata.number)
   } catch (error) {
     // Fail the workflow run if an error occurs
     core.setFailed(error.message)

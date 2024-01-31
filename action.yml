@@ -1,18 +1,45 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+
+name: 'Project cloner'
+description: 'Clone a GitHub project and its issues to a new repo and recreate the project board'
+author: 'helaili@github.com'
+
+# Add your action's branding here. This will appear on the GitHub Marketplace.
+branding:
+  icon: 'heart'
+  color: 'red'
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  template_owner:
+    description: 'The owner of the template repository'
     required: true
-    default: '1000'
+  template_repo:
+    description: 'The name of the template repository'
+    required: true
+  template_project_number:
+    description: 'The id number of the project to use as a template, found in the url. For example, if the url is https://github.com/orgs/github/projects/4247 then the project number is 4247'
+    required: true
+  owner: 
+    description: 'The owner of the repository to create'
+    required: true
+  repo:
+    description: 'The name of the repository to create'
+    required: true
+  project:
+    description: 'The name of the project to create'
+    required: true
+  token:
+    description: 'The GitHub token to use for authentication. Needs to have `Read and Write access to organization projects` and Repo permissions: `Read access to metadata`, `Read and Write access to administration and issues`'
+    required: true
 
 # Define your outputs here.
 outputs:
-  time:
-    description: 'Your output description here'
+  id:
+    description: 'The id of the created project'
+  url:
+    description: 'The url of the created project'
+  number:
+    description: 'The number of the created project'
 
 runs:
   using: node20
