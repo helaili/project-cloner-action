@@ -39929,7 +39929,6 @@ class GitHubAPI {
 ;// CONCATENATED MODULE: ./node_modules/@helaili/project-cloner/dist/projectCloner.js
 
 
-const packageJson = require('./package.json');
 class ProjectCloner {
     constructor(token, template_owner, template_repo, template_project_number, owner, repo, project) {
         this.template_owner = template_owner;
@@ -39941,7 +39940,6 @@ class ProjectCloner {
         this.github = new GitHubAPI(token);
     }
     async clone() {
-        console.log(`****** Using module version ${packageJson.version} ******`);
         const orgId = await this.github.getOrgId(this.template_owner);
         const templateRepo = await this.github.getRepoTemplate(this.template_owner, this.template_repo);
         console.log(`Org id is ${orgId}, template repo id is ${templateRepo.id}`);
