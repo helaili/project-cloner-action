@@ -39,7 +39,7 @@ jobs:
         with:
           node-version-file: .node-version
           cache: npm
-          token: ${{secrets.GITHUB_TOKEN}}
+          registry-url: "https://npm.pkg.github.com"
 
       - name: Install Dependencies
         id: install
