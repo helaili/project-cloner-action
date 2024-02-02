@@ -26,6 +26,7 @@ jobs:
     permissions:
       contents: read
       statuses: write
+      packages: read
 
     steps:
       - name: Checkout
@@ -38,6 +39,7 @@ jobs:
         with:
           node-version-file: .node-version
           cache: npm
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Dependencies
         id: install
