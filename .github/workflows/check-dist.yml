@@ -39,11 +39,12 @@ jobs:
         with:
           node-version-file: .node-version
           cache: npm
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Dependencies
         id: install
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Build dist/ Directory
         id: build
